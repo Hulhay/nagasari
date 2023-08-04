@@ -14,7 +14,7 @@ type storesService struct {
 }
 
 type StoresService interface {
-	GetStores(ctx context.Context, keyword string) ([]models.Store, error)
+	GetStores(ctx context.Context, req *models.GetStoresRequest) ([]models.Store, *utils.Pagination, error)
 }
 
 func NewStoresService(storesRepo repositories.Repository) StoresService {
@@ -23,11 +23,11 @@ func NewStoresService(storesRepo repositories.Repository) StoresService {
 	}
 }
 
-func (ss *storesService) GetStores(ctx context.Context, keyword string) ([]models.Store, error) {
-	stores, err := ss.storesRepo.GetStoresFromDB(ctx, keyword)
+func (ss *storesService) GetStores(ctx context.Context, req *models.GetStoresRequest) ([]models.Store, *utils.Pagination, error) {
+	stores, pagination, err := ss.storesRepo.GetStoresFromDB(ctx, req)
 	if err != nil {
 		log.Printf("Error get stores from db : %v\n", err.Error())
-		return nil, utils.ErrFetchData
+		return nil, nil, utils.ErrFetchData
 	}
-	return stores, nil
+	return stores, pagination, err
 }

@@ -18,5 +18,5 @@ func NewHealthController() HealthController {
 }
 
 func (c *healthController) Health(ctx *gin.Context) {
-	utils.BuildAPIResponse(ctx, http.StatusOK, "I'm feeling fine", nil)
+	utils.BuildAPIResponse(ctx, http.StatusOK, "I'm feeling fine", nil, nil)
 }

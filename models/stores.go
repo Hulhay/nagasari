@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/hulhay/nagasari/lib/utils"
+)
 
 type Store struct {
 	ID               int64     `db:"id"`
@@ -11,6 +15,13 @@ type Store struct {
 	OwnerName        string    `db:"owner_name"`
 	OwnerPhoneNumber string    `db:"owner_phone_number"`
 	CreatedAt        time.Time `db:"created_at"`
+}
+
+type GetStoresRequest struct {
+	Pagination utils.PaginationRequest
+	Page       string
+	Size       string
+	Keyword    string
 }
 
 type GetStoresResponse struct {

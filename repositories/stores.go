@@ -2,43 +2,29 @@ package repositories
 
 import (
 	"context"
-	"fmt"
 
+	"github.com/hulhay/nagasari/lib/utils"
 	"github.com/hulhay/nagasari/models"
 )
 
-func (r *repository) GetStoresFromDB(ctx context.Context, keyword string) ([]models.Store, error) {
+func (r *repository) GetStoresFromDB(ctx context.Context, req *models.GetStoresRequest) ([]models.Store, *utils.Pagination, error) {
 	var (
-		results []models.Store
-		args    []interface{}
+		stores []models.Store
+		err    error
+		total  int
 	)
 
-	basicQuery := getStoresQuery
-	if keyword != "" {
-		basicQuery = fmt.Sprintf("%s WHERE %s", basicQuery, getStoresByKeywordName)
-		args = append(args, keyword)
-	}
-
-	stmt, err := r.qry.Read().PrepareContext(ctx, basicQuery)
+	err = r.qry.Read().SelectContext(ctx, &stores, getStoresQuery, req.Keyword, req.Pagination.Limit, req.Pagination.Offset)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	defer stmt.Close()
-	rows, err := stmt.QueryContext(ctx, args...)
+	err = r.qry.Read().GetContext(ctx, &total, getStoresCountQuery, req.Keyword)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	for rows.Next() {
-		var result models.Store
-		err := rows.Scan(&result.ID, &result.UUID, &result.StoreName, &result.StorePhotoURL, &result.OwnerUUID, &result.OwnerName, &result.OwnerPhoneNumber, &result.CreatedAt)
-		if err != nil {
-			return nil, err
-		}
+	pagination := utils.CalculatePagination(req.Pagination, total)
 
-		results = append(results, result)
-	}
-
-	return results, nil
+	return stores, pagination, nil
 }

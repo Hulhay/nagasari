@@ -13,17 +13,21 @@ type Response struct {
 }
 
 type Meta struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
+	Code       int        `json:"code"`
+	Message    string     `json:"message"`
+	Pagination Pagination `json:"pagination,omitempty"`
 }
 
-func BuildAPIResponse(ctx *gin.Context, code int, message string, data interface{}) Response {
+func BuildAPIResponse(ctx *gin.Context, code int, message string, data interface{}, pagination *Pagination) Response {
 	res := Response{
 		Meta: Meta{
 			Code:    code,
 			Message: message,
 		},
 		Data: data,
+	}
+	if pagination != nil {
+		res.Meta.Pagination = *pagination
 	}
 	ctx.JSON(code, res)
 	return res

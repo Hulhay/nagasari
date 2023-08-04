@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/hulhay/nagasari/lib/utils"
+	"github.com/hulhay/nagasari/models"
 	ss "github.com/hulhay/nagasari/services/stores"
 )
 
@@ -25,18 +26,23 @@ func NewStoresController(
 }
 
 func (sc *storesController) GetStores(ctx *gin.Context) {
-	keyword := ctx.Query("keyword")
-	err := validateGetStoresRequest(keyword)
+	req := models.GetStoresRequest{
+		Keyword: ctx.Query("keyword"),
+		Page:    ctx.Query("page"),
+		Size:    ctx.Query("size"),
+	}
+
+	param, err := validateGetStoresRequest(req)
 	if err != nil {
 		utils.BuildAPIErrorResponse(ctx, err)
 		return
 	}
 
-	resp, err := sc.storesService.GetStores(ctx, keyword)
+	resp, pagination, err := sc.storesService.GetStores(ctx, param)
 	if err != nil {
 		utils.BuildAPIErrorResponse(ctx, err)
 		return
 	}
 
-	utils.BuildAPIResponse(ctx, http.StatusOK, "success", buildGetStoresResponse(resp))
+	utils.BuildAPIResponse(ctx, http.StatusOK, "success", buildGetStoresResponse(resp), pagination)
 }

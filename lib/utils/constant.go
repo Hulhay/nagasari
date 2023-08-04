@@ -12,7 +12,8 @@ const (
 )
 
 var (
-	ErrKeywordLT3 = errors.New(http.StatusBadRequest, "at least 3 characters")
+	ErrMalformatRequest = errors.New(http.StatusBadRequest, "malformat request")
+	ErrKeywordLT3       = errors.New(http.StatusBadRequest, "at least 3 characters")
 
 	ErrFetchData = errors.New(http.StatusInternalServerError, "an error occured when query db")
 )
