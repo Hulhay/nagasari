@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/hulhay/nagasari/lib/utils"
 	"github.com/hulhay/nagasari/models"
@@ -27,4 +28,18 @@ func (r *repository) GetStoresFromDB(ctx context.Context, req *models.GetStoresR
 	pagination := utils.CalculatePagination(req.Pagination, total)
 
 	return stores, pagination, nil
+}
+
+func (r *repository) GetStoreByStoreUUIDFromDB(ctx context.Context, storeUUID string) (*models.Store, error) {
+	var store models.Store
+
+	err := r.qry.Read().GetContext(ctx, &store, getStoreByStoreUUIDQuery, storeUUID)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	return &store, nil
 }

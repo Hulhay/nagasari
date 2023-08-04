@@ -10,21 +10,21 @@ import (
 )
 
 type storesService struct {
-	storesRepo repositories.Repository
+	repo repositories.Repository
 }
 
 type StoresService interface {
 	GetStores(ctx context.Context, req *models.GetStoresRequest) ([]models.Store, *utils.Pagination, error)
 }
 
-func NewStoresService(storesRepo repositories.Repository) StoresService {
+func NewStoresService(repo repositories.Repository) StoresService {
 	return &storesService{
-		storesRepo: storesRepo,
+		repo: repo,
 	}
 }
 
 func (ss *storesService) GetStores(ctx context.Context, req *models.GetStoresRequest) ([]models.Store, *utils.Pagination, error) {
-	stores, pagination, err := ss.storesRepo.GetStoresFromDB(ctx, req)
+	stores, pagination, err := ss.repo.GetStoresFromDB(ctx, req)
 	if err != nil {
 		log.Printf("Error get stores from db : %v\n", err.Error())
 		return nil, nil, utils.ErrFetchData
