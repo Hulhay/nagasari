@@ -25,10 +25,7 @@ type GetStoresRequest struct {
 }
 
 type GetStoresResponse struct {
-	UUID             string `json:"uuid"`
-	StoreName        string `json:"store_name"`
-	StorePhotoURL    string `json:"store_photo_url"`
-	OwnerUUID        string `json:"owner_uuid"`
-	OwnerName        string `json:"owner_name"`
-	OwnerPhoneNumber string `json:"owner_phone_number"`
+	UUID          string `json:"uuid"`
+	StoreName     string `json:"store_name"`
+	StorePhotoURL string `json:"store_photo_url"`
 }

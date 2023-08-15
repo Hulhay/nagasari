@@ -14,11 +14,8 @@ func buildGetStoresResponse(stores []models.Store) []models.GetStoresResponse {
 
 func buildGetStores(store models.Store) models.GetStoresResponse {
 	result := models.GetStoresResponse{
-		UUID:             store.UUID,
-		StoreName:        store.StoreName,
-		OwnerUUID:        store.OwnerUUID,
-		OwnerName:        store.OwnerName,
-		OwnerPhoneNumber: store.OwnerPhoneNumber,
+		UUID:      store.UUID,
+		StoreName: store.StoreName,
 	}
 	if store.StorePhotoURL != nil {
 		result.StorePhotoURL = *store.StorePhotoURL
