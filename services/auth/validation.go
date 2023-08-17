@@ -29,3 +29,16 @@ func (as *authService) validateRegisterRequest(ctx context.Context, req models.R
 
 	return nil
 }
+
+func (as *authService) validateLoginRequest(ctx context.Context, req models.LoginRequest) (*models.User, error) {
+	user, err := as.repo.GetUserByEmailFromDB(ctx, req.Email)
+	if err != nil {
+		log.Printf("Error get user by email from db : %v", err.Error())
+		return nil, utils.ErrFetchData
+	}
+	if user == nil {
+		return nil, utils.ErrEmailNotFound
+	}
+
+	return user, nil
+}

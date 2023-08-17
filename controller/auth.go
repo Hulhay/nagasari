@@ -15,6 +15,7 @@ type authController struct {
 
 type AuthController interface {
 	Register(ctx *gin.Context)
+	Login(ctx *gin.Context)
 }
 
 func NewAuthController(
@@ -48,5 +49,32 @@ func (ac *authController) Register(ctx *gin.Context) {
 		return
 	}
 
-	utils.BuildAPIResponse(ctx, http.StatusOK, "success!", nil, nil)
+	utils.BuildAPIResponse(ctx, http.StatusOK, "success", nil, nil)
+}
+
+func (ac *authController) Login(ctx *gin.Context) {
+	var (
+		request models.LoginRequest
+		err     error
+	)
+
+	err = ctx.ShouldBindJSON(&request)
+	if err != nil {
+		utils.BuildAPIErrorResponse(ctx, utils.ErrMalformatRequest)
+		return
+	}
+
+	err = ac.validateLoginRequest(request)
+	if err != nil {
+		utils.BuildAPIErrorResponse(ctx, err)
+		return
+	}
+
+	response, err := ac.authService.Login(ctx, request)
+	if err != nil {
+		utils.BuildAPIErrorResponse(ctx, err)
+		return
+	}
+
+	utils.BuildAPIResponse(ctx, http.StatusOK, "success", response, nil)
 }

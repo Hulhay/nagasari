@@ -19,8 +19,15 @@ var (
 	ErrInvalidUUID      = errors.New(http.StatusBadRequest, "invalid uuid")
 	ErrEmptyStoreUUID   = errors.New(http.StatusBadRequest, "store uuid cannot be empty")
 
+	// 401
+	ErrExpToken = errors.New(http.StatusUnauthorized, "token is expired")
+
+	// 403
+	ErrInvalidToken = errors.New(http.StatusForbidden, "invalid token")
+
 	// 404
 	ErrStoreNotFound = errors.New(http.StatusNotFound, "store not found")
+	ErrEmailNotFound = errors.New(http.StatusNotFound, "email not found")
 
 	// 422
 	ErrInvalidEmail             = errors.New(http.StatusUnprocessableEntity, "invalid email format")
@@ -33,8 +40,10 @@ var (
 	ErrInvalidPassword          = errors.New(http.StatusUnprocessableEntity, "password must contain and contain only letters and numbers")
 	ErrEmailAlreadyExists       = errors.New(http.StatusUnprocessableEntity, "email already exists")
 	ErrPhoneNumberAlreadyExists = errors.New(http.StatusUnprocessableEntity, "phone number already exists")
+	ErrWrongPassword            = errors.New(http.StatusUnprocessableEntity, "wrong password")
 
 	// 500
+	ErrWentWrong      = errors.New(http.StatusInternalServerError, "something went wrong")
 	ErrFetchData      = errors.New(http.StatusInternalServerError, "an error occured when query db")
 	ErrNoRowsAffected = errors.New(http.StatusInternalServerError, "no rows affected")
 	ErrEncrypt        = errors.New(http.StatusInternalServerError, "something wrong with encryption process")

@@ -38,3 +38,21 @@ func (ac *authController) validateRegisterRequest(req models.RegisterRequest) er
 
 	return nil
 }
+
+func (ac *authController) validateLoginRequest(req models.LoginRequest) error {
+	var err error
+
+	if req.Email == `` {
+		return utils.ErrEmptyEmail
+	}
+	err = utils.ValidateEmailFormat(req.Email)
+	if err != nil {
+		return err
+	}
+
+	if req.Password == `` {
+		return utils.ErrEmptyPassword
+	}
+
+	return nil
+}
