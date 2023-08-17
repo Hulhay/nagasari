@@ -56,9 +56,6 @@ curl --location --request GET '{base_url}/api/v1/stores?page=1&size=2&keyword=ay
 | uuid | string | Store UUID |
 | store_name | string | Store Name |
 | store_photo_url | string | Store Photo |
-| owner_uuid | string | Owner UUID |
-| owner_name | string | Owner Name |
-| owner_phone_number | string | Owner Phone Number |
 
 ## Example Response
 
@@ -81,17 +78,11 @@ curl --location --request GET '{base_url}/api/v1/stores?page=1&size=2&keyword=ay
             "uuid": "98f755a7-0714-11ed-8123-1aab392cf837",
             "store_name": "Ayam Geprek Laris Manis",
             "store_photo_url": "",
-            "owner_uuid": "ef788049-7bc9-4cb0-96a0-6584e45bf0fd",
-            "owner_name": "Mutia Farida",
-            "owner_phone_number": "085240240071"
         },
         {
             "uuid": "03e189c2-d84d-45ee-8b9d-556e83a9c645",
             "store_name": "Ayam Geprek Sambel Ijo",
             "store_photo_url": "",
-            "owner_uuid": "7ee5d295-fe4a-4983-873d-a2f0b3b38c65",
-            "owner_name": "Mahesa Salahudin",
-            "owner_phone_number": "088594612253"
         }
     ]
 }
