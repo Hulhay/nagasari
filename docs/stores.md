@@ -114,7 +114,7 @@ curl --location --request GET '{base_url}/api/v1/stores?page=1&size=2&keyword=ay
 ```
 {
     "meta": {
-        "code": 400,
+        "code": 500,
         "message": "an error occured when query db",
         "pagination": {}
     },
@@ -267,7 +267,7 @@ curl --location --request GET '{base_url}/api/v1/stores/3f53205f-01c7-11ed-9140-
 ```
 {
     "meta": {
-        "code": 400,
+        "code": 500,
         "message": "an error occured when query db",
         "pagination": {}
     },

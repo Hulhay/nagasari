@@ -9,6 +9,7 @@ import (
 	"github.com/hulhay/nagasari/lib/config"
 	"github.com/hulhay/nagasari/repositories"
 
+	auth_service "github.com/hulhay/nagasari/services/auth"
 	menus_service "github.com/hulhay/nagasari/services/menus"
 	stores_service "github.com/hulhay/nagasari/services/stores"
 )
@@ -20,10 +21,12 @@ var (
 
 	ss stores_service.StoresService = stores_service.NewStoresService(repo)
 	ms menus_service.MenusService   = menus_service.NewStoresService(repo)
+	as auth_service.AuthService     = auth_service.NewAuthService(repo)
 
 	hc controller.HealthController = controller.NewHealthController()
 	sc controller.StoresController = controller.NewStoresController(ss)
 	mc controller.MenusController  = controller.NewMenusController(ms)
+	ac controller.AuthController   = controller.NewAuthController(as)
 )
 
 func main() {
@@ -55,6 +58,12 @@ func main() {
 		{
 			storesRoutes.GET("", sc.GetStores)
 			storesRoutes.GET("/:storeUUID/menus", mc.GetMenus)
+		}
+
+		// auth
+		authRoutes := v1.Group("/auth")
+		{
+			authRoutes.POST("/register", ac.Register)
 		}
 
 	}

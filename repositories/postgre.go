@@ -18,6 +18,10 @@ type Repository interface {
 	GetStoreByStoreUUIDFromDB(ctx context.Context, storeUUID string) (*models.Store, error)
 
 	GetMenusByStoreIDFromDB(ctx context.Context, storeID int64) ([]models.Menu, error)
+
+	GetUserByEmailFromDB(ctx context.Context, email string) (*models.User, error)
+	GetUserByPhoneNumberFromDB(ctx context.Context, phoneNumber string) (*models.User, error)
+	InsertUserToDB(ctx context.Context, req models.RegisterRequest) error
 }
 
 func NewRepository(cfg *config.Config) Repository {
