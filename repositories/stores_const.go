@@ -6,6 +6,7 @@ var (
 		from stores s
 		join users u on s.owner_id = u.id
 		where s.store_name ilike '%' || $1 || '%'
+		order by s.id
 		limit $2 offset $3
 		`
 
