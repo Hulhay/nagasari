@@ -1,4 +1,4 @@
-package menus
+package products
 
 import (
 	"context"
@@ -8,8 +8,8 @@ import (
 	"github.com/hulhay/nagasari/models"
 )
 
-func (ms *menusService) validateStoreUUID(ctx context.Context, storeUUID string) (*models.Store, error) {
-	store, err := ms.repo.GetStoreByStoreUUIDFromDB(ctx, storeUUID)
+func (ps *productsService) validateStoreUUID(ctx context.Context, storeUUID string) (*models.Store, error) {
+	store, err := ps.repo.GetStoreByStoreUUIDFromDB(ctx, storeUUID)
 	if err != nil {
 		log.Printf("Error get stores from db : %v\n", err.Error())
 		return nil, utils.ErrFetchData

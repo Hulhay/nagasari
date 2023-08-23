@@ -1,7 +1,7 @@
 # Auth API
 
 <details>
-  <summary>Register Docs</summary>
+  <summary>Register</summary>
 
 # Register
 
@@ -204,7 +204,7 @@ curl --location --request POST '{base_url}/api/v1/auth/register' \
 ---
 
 <details>
-  <summary>Login Docs</summary>
+  <summary>Login</summary>
 
 # Login
 

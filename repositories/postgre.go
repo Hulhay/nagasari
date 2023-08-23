@@ -17,7 +17,7 @@ type Repository interface {
 	GetStoresFromDB(ctx context.Context, req *models.GetStoresRequest) ([]models.Store, *utils.Pagination, error)
 	GetStoreByStoreUUIDFromDB(ctx context.Context, storeUUID string) (*models.Store, error)
 
-	GetMenusByStoreIDFromDB(ctx context.Context, storeID int64) ([]models.Menu, error)
+	GetProductsByStoreIDFromDB(ctx context.Context, storeID int64) ([]models.Product, error)
 
 	GetUserByEmailFromDB(ctx context.Context, email string) (*models.User, error)
 	GetUserByPhoneNumberFromDB(ctx context.Context, phoneNumber string) (*models.User, error)

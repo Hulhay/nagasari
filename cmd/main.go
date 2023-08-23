@@ -10,7 +10,7 @@ import (
 	"github.com/hulhay/nagasari/repositories"
 
 	auth_service "github.com/hulhay/nagasari/services/auth"
-	menus_service "github.com/hulhay/nagasari/services/menus"
+	products_service "github.com/hulhay/nagasari/services/products"
 	stores_service "github.com/hulhay/nagasari/services/stores"
 	token_service "github.com/hulhay/nagasari/services/token"
 )
@@ -20,15 +20,15 @@ var (
 
 	repo repositories.Repository = repositories.NewRepository(cfg)
 
-	ss stores_service.StoresService = stores_service.NewStoresService(repo)
-	ms menus_service.MenusService   = menus_service.NewStoresService(repo)
-	ts token_service.TokenService   = token_service.NewTokenService(*cfg)
-	as auth_service.AuthService     = auth_service.NewAuthService(repo, ts)
+	ss stores_service.StoresService     = stores_service.NewStoresService(repo)
+	ps products_service.ProductsService = products_service.NewProductsService(repo)
+	ts token_service.TokenService       = token_service.NewTokenService(*cfg)
+	as auth_service.AuthService         = auth_service.NewAuthService(repo, ts)
 
-	hc controller.HealthController = controller.NewHealthController()
-	sc controller.StoresController = controller.NewStoresController(ss)
-	mc controller.MenusController  = controller.NewMenusController(ms)
-	ac controller.AuthController   = controller.NewAuthController(as)
+	hc controller.HealthController   = controller.NewHealthController()
+	sc controller.StoresController   = controller.NewStoresController(ss)
+	pc controller.ProductsController = controller.NewProductsController(ps)
+	ac controller.AuthController     = controller.NewAuthController(as)
 )
 
 func main() {
@@ -59,7 +59,7 @@ func main() {
 		storesRoutes := v1.Group("/stores")
 		{
 			storesRoutes.GET("", sc.GetStores)
-			storesRoutes.GET("/:storeUUID/menus", mc.GetMenus)
+			storesRoutes.GET("/:storeUUID/products", pc.GetProducts)
 		}
 
 		// auth

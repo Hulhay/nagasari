@@ -6,7 +6,7 @@ import (
 	"github.com/hulhay/nagasari/models"
 )
 
-func validateGetMenusRequest(req models.GetMenusRequest) error {
+func validateGetMenusRequest(req models.GetProductsRequest) error {
 	if req.StoreUUID == "" {
 		return utils.ErrEmptyStoreUUID
 	}
